@@ -6,14 +6,15 @@ import time
 import chromadb
 from chromadb.utils import embedding_functions
 
-API_KEY = os.getenv("OPENAI_API_KEY", "").strip()
-if not API_KEY or API_KEY.startswith("sk-paste"):
-    sys.exit("[ingest] OPENAI_API_KEY is missing. Put a real key in .env and recreate.")
+# API_KEY = os.getenv("OPENAI_API_KEY", "").strip()
+# if not API_KEY or API_KEY.startswith("sk-paste"):
+#     sys.exit("[ingest] OPENAI_API_KEY is missing. Put a real key in .env and recreate.")
 
-openai_ef = embedding_functions.OpenAIEmbeddingFunction(
-    api_key=API_KEY,
-    model_name="text-embedding-3-small",
-)
+# openai_ef = embedding_functions.OpenAIEmbeddingFunction(
+#     api_key=API_KEY,
+#     model_name="text-embedding-3-small",
+# )
+local_ef = embedding_functions.DefaultEmbeddingFunction()
 
 host = os.getenv("CHROMA_HOST", "localhost")
 port = int(os.getenv("CHROMA_PORT", "8000"))
@@ -30,7 +31,7 @@ for attempt in range(10):
 if chroma is None:
     sys.exit(f"[ingest] Could not reach chroma at {host}:{port}")
 
-collection = chroma.get_or_create_collection(name="notes", embedding_function=openai_ef)
+collection = chroma.get_or_create_collection(name="notes", embedding_function=local_ef)
 
 files = sorted(glob.glob("docs/*.txt") + glob.glob("docs/*.md"))
 if not files:

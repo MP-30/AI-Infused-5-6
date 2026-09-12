@@ -106,7 +106,7 @@ def ask(q: Question):
 
     # 3. GENERATE - let the LLM write the final answer
     resp = llm.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+        model="openai/gpt-oss-120b",
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": q.query},
