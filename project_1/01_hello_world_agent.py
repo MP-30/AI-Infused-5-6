@@ -13,4 +13,11 @@ import sys, os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from strands import  Agent
 from strands.models.bedrock import BedrockModel
-form config import 
+from config import NOVA_LITE
+
+model = BedrockModel(model_id=NOVA_LITE)
+
+agent = Agent(model=model)
+
+response = agent("Hello! Tell me a fun fact about AI agent.")
+print(response)

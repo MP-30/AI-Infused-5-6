@@ -6,6 +6,11 @@ Once in this file instead of editing a dozen scripts.
 '''
 import os
 
+from dotenv import load_dotenv
+
+# Load .env from the repo root (AWS_PROFILE, AWS_DEFAULT_REGION, API keys)
+load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env"))
+
 # Current, non-retired models (verified working).
 # The "us." prefix is a cross-region inference profile — required for Claude on Bedrock.
 HAIKU = "us.anthropic.claude-haiku-4-5-20251001-v1:0"    # fast + cheap  → default
